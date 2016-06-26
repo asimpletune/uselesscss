@@ -1,3 +1,16 @@
+import { docopt } from 'docopt'
+
+const usage = `
+usage:
+  useless <command>
+
+options:
+  -h --help   Show this message
+  --version   Print version
+`
+
+let args = docopt(usage, { version: '0.0.1' })
+
 import parse from 'css-parse';
 import css from 'css'
 import fs from 'fs';
