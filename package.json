@@ -10,10 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/asimpletune/uselesscss.git"
   },
-  "author": "Spencer Scorcelletti <spencerscorcelletti@gmail.com>",
+  "author": "Spencer Scorcelletti <asimpletune@icloud.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/asimpletune/uselesscss/issues"
+  },
+  "scripts": {
+    "build": "babel src -d bin --compact --source-maps true"
   },
   "homepage": "https://github.com/asimpletune/uselesscss#readme",
   "dependencies": {
