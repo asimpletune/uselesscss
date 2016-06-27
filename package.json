@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --globals __core-js_shared__ --reporter spec --bail --check-leaks test/",
     "test-ci": "mocha --compilers js:babel-core/register --globals __core-js_shared__ --reporter spec --check-leaks test/",
-    "build": "babel src -d bin --compact --source-maps true"
+    "build": "babel src -d lib --compact --source-maps true"
   },
   "repository": {
     "type": "git",
