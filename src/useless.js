@@ -4,8 +4,22 @@ import fs from 'fs';
 import cheerio from 'cheerio';
 
 export default function Useless(html) {
-  let $ = cheerio.load(html),
-    ast = parse(fs.readFileSync('./example/bootstrap.css').toString());
+  let $ = cheerio.load(html)
+  let links = $('link[href$=".css"]')
+  let result = []
+  Object.keys(links).forEach((key, index) => {
+    if (index < links.length) {
+      let element = links[key]
+      let href = element.attribs.href
+      let ast = convertLocalFile($, href)
+      result.push(css.stringify(ast));
+    }
+  })
+  return result
+}
+
+function convertLocalFile($, path) {
+  let ast = parse(fs.readFileSync(path).toString());
   let candidateRules = ast.stylesheet.rules;
   let activeRules = candidateRules.filter((rule) => {
     switch (rule.type) {
@@ -33,8 +47,6 @@ export default function Useless(html) {
         console.log("Add a case for this!", rule.type);
     }
   });
-
   ast.stylesheet.rules = activeRules;
-
-  return css.stringify(ast);
+  return ast
 }
