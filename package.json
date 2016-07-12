@@ -4,8 +4,8 @@
   "description": "Trim bloat from your CSS by only including rules that will actually be active.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --globals __core-js_shared__ --reporter spec --bail --check-leaks test/",
-    "test-ci": "mocha --compilers js:babel-core/register --globals __core-js_shared__ --reporter spec --check-leaks test/",
+    "test": "mocha --compilers js:babel-register --globals __core-js_shared__ --reporter spec --bail --check-leaks test/",
+    "test-ci": "mocha --compilers js:babel-register --globals __core-js_shared__ --reporter spec --check-leaks test/",
     "build": "babel src -d lib --compact --source-maps true"
   },
   "repository": {
@@ -20,11 +20,12 @@
   "homepage": "https://github.com/asimpletune/uselesscss#readme",
   "dependencies": {
     "cheerio": "^0.19.0",
-    "css-parse": "^2.0.0",
+    "css": "^2.2.1",
     "docopt": "^0.6.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.1.18",
+    "babel-register": "^6.9.0",
     "chai": "^3.5.0",
     "mocha": "^2.5.3"
   }
