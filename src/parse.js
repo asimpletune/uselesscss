@@ -24,8 +24,6 @@ const SELECTOR_REGEX = (() => {
   return new RegExp(`([^${CSS_COMBINATOR_WHITESPACE}${CSS_COMBINATOR_NONWHITESPACE}])+`, 'g')
 })()
 
-console.log(SELECTOR_REGEX);
-
 /**
  * Takes a selector, returns an array of one or more sequences of simple selectors, delimited by combinators
  */

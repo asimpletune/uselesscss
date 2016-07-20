@@ -3,18 +3,124 @@ import { assert } from "chai"
 import Useless from '../src/useless'
 import fs from 'fs';
 import parse from '../src/parse';
+import cheerio from 'cheerio'
+import cssLib from 'css'
 
 describe('lib', () => {
-  it('Should return an empty string if no css is provided', () => {
-    var htmlString = fs.readFileSync('./test/no-elements.html').toString()
-    var output = Useless(htmlString);
-    assert.strictEqual(output, '')
+  let blankHtmlTemplate = ''
+  before(() => {
+    blankHtmlTemplate = fs.readFileSync('./test/blank.html', 'utf8')
+  });
+  /**
+   * Test cases follow pattern specified in https://www.w3.org/TR/css3-selectors/#selectors
+   */
+  describe('Empty cases', () => {
+    it(`Should return an empty string if no CSS is provided`, () => {
+      var html = blankHtmlTemplate
+      var output = Useless(html);
+      assert.strictEqual(output, '')
+    })
+    it(`Should return an empty string if no CSS is used`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<p class="bold">Hello, world!</p>')
+      let ast = cssLib.parse('a {color: red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
   })
-  it('Should return an empty string if no css is used', () => {
-    var htmlString = fs.readFileSync('./test/no-elements.html').toString()
-    var cssString = fs.readFileSync('./test/simple.css').toString()
-    var output = Useless(htmlString, cssString);
-    assert.strictEqual(output, '')
+  describe('Universal selector', () => {
+    it(`Should always include universal selector`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      let ast = cssLib.parse('*{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+  })
+  describe('Type selector', () => {
+    it(`Should include type selectors from CSS, if they're present in HTML`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`Should exclude type selectors from CSS, if they're not present in HTML`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('p{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+  });
+  describe('Attribute selector', () => {
+    it(`E[foo] postive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[bar]: negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[bar]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E[foo="bar"] positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="bar" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo="bar"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[foo="bar"] negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="baz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo="bar"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E[foo~="bar"] positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="foo bar baz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo~="bar"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[foo~="bar"] negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="foo bar baz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo~="buzz"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E[foo^="bar"] positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="barbaz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo^="bar"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[foo^="bar"] negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="bar baz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo^="arbaz"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
   })
   describe('selectors', () => {
     describe('selector grammar', () => {
