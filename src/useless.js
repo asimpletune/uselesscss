@@ -61,7 +61,7 @@ export default function Useless(html, css){
         selector = selector.substring(0, selector.lastIndexOf(':'))
       }
     }
-    let escaped = selector.replace(/([\@\^\:\(\)])/g, '\\$1' ) //"
+    let escaped = selector.replace(/([\@\:\(\)])/g, '\\$1' ) //"
     let selection = $(escaped);
     result = selection.length > 0;
     return result;
