@@ -1,0 +1,7 @@
+:root, div:nth-child(n), div div:nth-last-child(n), div.my-class:nth-of-type(n), *:nth-last-of-type(n), div + div:first-child, p~p:last-child, a>p:first-of-type, p p p:last-of-type, :only-child, :only-of-type, :empty, :link, :visited, :active, :hover, :focus, :target, :lang(fr), :enabled, :disabled, :checked, :not(div) {
+  color: red;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999;
+}

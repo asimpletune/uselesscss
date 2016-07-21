@@ -2,14 +2,13 @@ import mocha from "mocha"
 import { assert } from "chai"
 import Useless from '../src/useless'
 import fs from 'fs';
-import parse from '../src/parse';
 import cheerio from 'cheerio'
 import cssLib from 'css'
 
 describe('lib', () => {
   let blankHtmlTemplate = ''
   before(() => {
-    blankHtmlTemplate = fs.readFileSync('./test/blank.html', 'utf8')
+    blankHtmlTemplate = fs.readFileSync('./test/html/blank.html', 'utf8')
   });
   /**
    * Test cases follow pattern specified in https://www.w3.org/TR/css3-selectors/#selectors
@@ -115,47 +114,148 @@ describe('lib', () => {
     })
     it(`E[foo^="bar"] negative case`, () => {
       let $ = cheerio.load(blankHtmlTemplate)
-      $('body').append('<a foo="bar baz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      $('body').append('<a foo="barbaz" href="http://github.com/asimpletune/uselesscss">useless</a>')
       let ast = cssLib.parse('a[foo^="arbaz"]{color:red;}')
       let html = $.root().html(), css = cssLib.stringify(ast)
       let output = Useless(html, css);
       assert.strictEqual(output, '')
     })
+    it(`E[foo$="bar"] positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="barbaz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo$="arbaz"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[foo$="bar"] negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="barbaz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo$="arba"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E[foo*="bar"] positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="barbaz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo*="arba"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[foo*="bar"] negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a foo="barbaz" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[foo*="buzz"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E[lang|="en"] positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a lang="zh-Hant" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[lang|="zh"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E[lang|="en"] negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<a lang="zh-Hant" href="http://github.com/asimpletune/uselesscss">useless</a>')
+      let ast = cssLib.parse('a[lang|="hant"]{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
   })
-  describe('selectors', () => {
-    describe('selector grammar', () => {
-      describe('selector -> (sequences of simple selectors)*', () => {
-        describe('combinators', () => {
-          it('Should delimit the descendent combinator on spaces, tabs, line feeds, carriage returns, and form feeds', () => {
-            let s = '\u0020', t = '\u0009', lf = '\u000A', cr = '\u000D', ff = '\u000C'
-            let descendentSelector = `${s}#myId${lf}div#anotherId${t}p.myClass1.andMyClass2${s}div.aClass${t}${s}div${lf}${lf}p${cr}${ff}a${s}`;
-            let expected = ['#myId', 'div#anotherId', 'p.myClass1.andMyClass2', 'div.aClass', 'div', 'p', 'a']
-            let actual = parse.sequence(descendentSelector)
-            assert.deepEqual(expected, actual)
-          })
-          it('Should delimit the child combinator on >', () => {
-            let gt = '\u003E'
-            let childSelector = `#myId${gt}div#anotherId ${gt}p.myClass1.andMyClass2${gt} div.aClass ${gt} ${gt}div ${gt}${gt} p${gt} ${gt}a${gt} `;
-            let expected = ['#myId', 'div#anotherId', 'p.myClass1.andMyClass2', 'div.aClass', 'div', 'p', 'a']
-            let actual = parse.sequence(childSelector)
-            assert.deepEqual(expected, actual)
-          })
-          it('Should delimit the sibling combinator on +', () => {
-            let p = '\u002B'
-            let siblingSelector = `#myId${p}div#anotherId ${p}p.myClass1.andMyClass2${p} div.aClass ${p} ${p}div ${p}${p} p${p} ${p}a${p} `;
-            let expected = ['#myId', 'div#anotherId', 'p.myClass1.andMyClass2', 'div.aClass', 'div', 'p', 'a']
-            let actual = parse.sequence(siblingSelector)
-            assert.deepEqual(expected, actual)
-          })
-          it('Should delimit the general sibling combinator on ~', () => {
-            let t = '\u007E'
-            let generalSiblingSelector = `#myId${t}div#anotherId ${t}p.myClass1.andMyClass2${t} div.aClass ${t} ${t}div ${t}${t} p${t} ${t}a${t} `;
-            let expected = ['#myId', 'div#anotherId', 'p.myClass1.andMyClass2', 'div.aClass', 'div', 'p', 'a']
-            let actual = parse.sequence(generalSiblingSelector)
-            assert.deepEqual(expected, actual)
-          })
-        })
-      })
+  describe('Structural pseudo-classes', () => {
+    it(`:root should always apply`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      let ast = cssLib.parse(':root{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E:nth-child(an+b) positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-child(2n+1){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E:nth-child(an+b) negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-child(7){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E:nth-last-child(an+b) positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-last-child(2n+1){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E:nth-last-child(an+b) negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-last-child(7){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E:nth-of-type(an+b) positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-of-type(2n+1){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E:nth-of-type(an+b) negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-of-type(7){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E:nth-last-of-type(an+b) positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-last-of-type(2n+1){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E:nth-last-of-type(an+b) negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div>')
+      let ast = cssLib.parse('div:nth-last-of-type(7){color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
+    })
+    it(`E:first-child positive case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><span>1</span><span>2</span></div>')
+      let ast = cssLib.parse('span:first-child{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, css)
+    })
+    it(`E:first-child negative case`, () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><span>1</span><span>2</span></div>')
+      let ast = cssLib.parse('p:first-child{color:red;}')
+      let html = $.root().html(), css = cssLib.stringify(ast)
+      let output = Useless(html, css);
+      assert.strictEqual(output, '')
     })
   })
 });

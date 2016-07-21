@@ -54,6 +54,7 @@ export default function Useless(html, css){
   function filterSelector(selector) {
     let result = false
     let override = /(@|(:link)|(:visited)|:(active)|(:hover)|(:focus)|(:target)|(:disable)|(:enabled)|(:checked)|(::)|(:before)|(:after))/
+    let hasColonAndParen = /.*:.*\(.*\).*/
     if (override.test(selector)) {
       if (/::/.test(selector)) {
         selector = selector.substring(0, selector.lastIndexOf('::'))
@@ -61,7 +62,12 @@ export default function Useless(html, css){
         selector = selector.substring(0, selector.lastIndexOf(':'))
       }
     }
-    let escaped = selector.replace(/([\@\:\(\)])/g, '\\$1' ) //"
+    let escaped = ''
+    if (hasColonAndParen.test(selector)) {
+      escaped = selector.replace(/@/, '\\$1')
+    } else {
+      escaped = selector.replace(/((?!^:)[:\@\(\)])/g, '\\$1' )
+    }
     let selection = $(escaped);
     result = selection.length > 0;
     return result;
