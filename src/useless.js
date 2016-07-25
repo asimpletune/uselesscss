@@ -54,7 +54,7 @@ export default function Useless(html, css){
   function filterSelector(selector) {
     let result = false
     let override = /(@|(:link)|(:visited)|:(active)|(:hover)|(:focus)|(:target)|(:disable)|(:enabled)|(:checked)|(::)|(:before)|(:after))/
-    let hasColonAndParen = /.*:.*\(.*\).*/
+    // let hasColonAndParen = /.*:.*\(.*\).*/
     if (override.test(selector)) {
       if (/::/.test(selector)) {
         selector = selector.substring(0, selector.lastIndexOf('::'))
@@ -63,12 +63,19 @@ export default function Useless(html, css){
       }
     }
     let escaped = ''
-    if (hasColonAndParen.test(selector)) {
-      escaped = selector.replace(/@/, '\\$1')
-    } else {
-      escaped = selector.replace(/((?!^:)[:\@\(\)])/g, '\\$1' )
+    // if (hasColonAndParen.test(selector)) {
+    //   escaped = selector.replace(/@/, '\\$1')
+    // } else {
+    //   escaped = selector.replace(/((?!^:)[:\@\(\)])/g, '\\$1' )
+    // }
+    let selection;
+    try {
+      selection = $(selector);
+    } catch (e) {
+      selection = $(cssesc(selector, {isIdentifier:true}))
+    } finally {
+
     }
-    let selection = $(escaped);
     result = selection.length > 0;
     return result;
   }
