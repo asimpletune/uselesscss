@@ -1,8 +1,0 @@
-::first-line, :first-line, ::first-letter, :first-letter, ::blank, :blank, ::before, :before, ::after, :after {
-  content: ":)"
-}
-
-.form-control::-moz-placeholder {
-  color: #999;
-  opacity: 1;
-}

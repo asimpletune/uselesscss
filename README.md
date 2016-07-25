@@ -14,6 +14,10 @@ npm run build # build from source
 
 ## Usage
 
+You can use useless through the CLI or as a library
+
+### CLI
+
 ```bash
 usage:
   useless [options] <html> ([-] | [<css>])
@@ -36,6 +40,15 @@ The pipe syntax (i.e. `-`) is useful when used with a build pipeline or want to 
 ```bash
 curl -L https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css | ./bin/useless ~/index.html - > bootstrap.useless.css
 ```
+
+### Library
+
+```js
+var useless = require('useless')
+var reducedCss = useless(html, css)
+```
+
+Where `html` and `css` are strings.
 
 ## TODO
 
