@@ -8,6 +8,8 @@
   "globals": {
     "it": false,
     "describe": false,
-    "before": false
+    "before": false,
+    "beforeEach": false,
+    "afterEach": false
   }
 }

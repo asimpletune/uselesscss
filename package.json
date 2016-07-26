@@ -39,7 +39,9 @@
     "globals": [
       "it",
       "describe",
-      "before"
+      "before",
+      "beforeEach",
+      "afterEach"
     ]
   },
   "devDependencies": {
@@ -52,7 +54,8 @@
     "eslint-plugin-promise": "^2.0.0",
     "eslint-plugin-standard": "^2.0.0",
     "mocha": "^2.5.3",
-    "standard": "^7.1.2"
+    "standard": "^7.1.2",
+    "temporary": "0.0.8"
   },
   "preferGlobal": true
 }
