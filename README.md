@@ -52,12 +52,29 @@ Where `html` and `css` are strings.
 
 ## TODO
 
-* Add support for :target, :lang
-* MORE test cases
-* Write short comparison between this and similar tools, like uncss
-* Show some real data on the amount of network bandwidth saved and improved load times
-* Preserve input formatting in output
-* Allow specifying a url (e.g. html that's generated would be hard to make use of this)
-* Write section on how to incorporate this with dynamic selection of CSS
-* -o | --output? Not sure when this would be necessary over redirection
-* Publish to npm registry
+* General  
+  * Preserve input formatting in output
+  * Publish to npm registry
+  * Better selector parsing/engine (entirely new project)
+  * Better selection algorithm (i.e. sort of memoize previous attempts to reduce always going to the selector engine)
+  * Windows support
+* Documentation
+  * Write short comparison between this and similar tools, like uncss
+  * Show some real data on the amount of network bandwidth saved and improved load times
+  * Common how to:
+    * Write section on how to incorporate useless with dynamic selection of CSS
+    * Supply multiple files as args either through CLI or concatenating before hand
+    * Sample pipeline from beginning to end
+    * Suggestions on how to use on sites with many pages
+* Lib
+  * Add support for :target, :lang
+* CLI  
+  * Allow url as an arg (e.g. html that's generated at runtime would be hard to make use of this)
+  * -o | --output
+  * Include a flag to output what was excluded or save that output file
+  * Ignore flag that maybe takes a regex
+* Testing
+  * Finish CLI tests
+  * A few "real world tests", i.e. bootswatch + bootstrap compared to bootswatch + bootstrap + useless
+  * Compare output to similar tools
+  * Add benchmarking
