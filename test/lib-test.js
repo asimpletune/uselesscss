@@ -1,6 +1,6 @@
 import 'mocha'
 import { assert } from 'chai'
-import Useless from '../src/useless'
+import Useless from '../src/uselesscss'
 import fs from 'fs'
 import cheerio from 'cheerio'
 import cssLib from 'css'

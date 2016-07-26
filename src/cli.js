@@ -1,11 +1,11 @@
 import { docopt } from 'docopt'
-import Useless from './useless'
+import Useless from './uselesscss'
 import fs from 'fs'
 
 const usage =
 `
 usage:
-  useless [options] <html> ([-] | [<css>])
+  uselesscss [options] <html> ([-] | [<css>])
 
 options:
   -h --help  Show this message

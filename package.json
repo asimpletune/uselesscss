@@ -2,16 +2,16 @@
   "name": "uselesscss",
   "version": "0.0.1",
   "description": "Trim bloat from your CSS by only including rules that will actually be active.",
-  "main": "lib/useless.js",
+  "main": "lib/uselesscss.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register --globals __core-js_shared__ --reporter spec --bail --check-leaks test/",
     "test-ci": "mocha --compilers js:babel-register --globals __core-js_shared__ --reporter spec --check-leaks test/",
-    "build": "rm -rf lib/ bin/ && babel src --compact --source-maps true -d lib && mkdir bin/ && echo \"#!/usr/bin/env node\nrequire('../lib/cli')\" > bin/useless && chmod +x bin/useless",
+    "build": "rm -rf lib/ bin/ && babel src --compact --source-maps true -d lib && mkdir bin/ && echo \"#!/usr/bin/env node\nrequire('../lib/cli')\" > bin/uselesscss && chmod +x bin/uselesscss",
     "lint": "eslint src/ test/ || true",
     "format": "standard --fix src/* test/* || true"
   },
   "bin": {
-    "useless": "bin/useless"
+    "uselesscss": "bin/uselesscss"
   },
   "directories": {
     "lib": "lib",
