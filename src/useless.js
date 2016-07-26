@@ -48,7 +48,7 @@ export default function Useless (html, css) {
 
   function filterSelector (selector) {
     let result = false
-    let override = /(@|(:link)|(:visited)|:(active)|(:hover)|(:focus)|(:target)|(:disable)|(:enabled)|(:checked)|(::)|(:before)|(:after))/
+    let override = /(@|(:link)|(:visited)|:(active)|(:hover)|(:focus)|(:target)|(:lang)|(:disable)|(:enabled)|(:checked)|(::)|(:before)|(:after))/
     if (override.test(selector)) {
       if (/::/.test(selector)) {
         selector = selector.substring(0, selector.lastIndexOf('::'))

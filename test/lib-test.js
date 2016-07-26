@@ -17,7 +17,7 @@ describe('lib', () => {
     it('Should return an empty string if no CSS is provided', () => {
       var html = blankHtmlTemplate
       var output = Useless(html)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('Should return an empty string if no CSS is used', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -26,7 +26,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
   })
   describe('Universal selector', () => {
@@ -36,7 +36,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
   })
   describe('Type selector', () => {
@@ -47,7 +47,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('Should exclude type selectors from CSS, if they\'re not present in HTML', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -56,7 +56,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
   })
   describe('Attribute selector', () => {
@@ -67,7 +67,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[bar]: negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -76,7 +76,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E[foo="bar"] positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -85,7 +85,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[foo="bar"] negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -94,7 +94,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E[foo~="bar"] positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -103,7 +103,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[foo~="bar"] negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -112,7 +112,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E[foo^="bar"] positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -121,7 +121,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[foo^="bar"] negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -130,7 +130,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E[foo$="bar"] positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -139,7 +139,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[foo$="bar"] negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -148,7 +148,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E[foo*="bar"] positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -157,7 +157,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[foo*="bar"] negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -166,7 +166,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E[lang|="en"] positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -175,7 +175,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E[lang|="en"] negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -184,7 +184,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
   })
   describe('Structural pseudo-classes', () => {
@@ -194,7 +194,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:nth-child(an+b) positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -203,7 +203,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:nth-child(an+b) negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -212,7 +212,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:nth-last-child(an+b) positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -221,7 +221,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:nth-last-child(an+b) negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -230,7 +230,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:nth-of-type(an+b) positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -239,7 +239,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:nth-of-type(an+b) negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -248,7 +248,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:nth-last-of-type(an+b) positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -257,7 +257,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:nth-last-of-type(an+b) negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -266,7 +266,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:first-child positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -275,7 +275,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:first-child negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -284,7 +284,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:last-child positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -293,7 +293,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:last-child negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -302,7 +302,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:only-child positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -311,7 +311,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:only-child negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -320,7 +320,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:only-of-type positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -329,7 +329,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:only-of-type negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -338,7 +338,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
     it('E:empty positive case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -347,7 +347,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, css)
+      assert.strictEqual(css, output)
     })
     it('E:first-child negative case', () => {
       let $ = cheerio.load(blankHtmlTemplate)
@@ -356,7 +356,7 @@ describe('lib', () => {
       let html = $.root().html()
       let css = cssLib.stringify(ast)
       let output = Useless(html, css)
-      assert.strictEqual(output, '')
+      assert.strictEqual('', output)
     })
   })
   describe('Link pseudo-classes', () => {
@@ -481,6 +481,98 @@ describe('lib', () => {
       css = cssLib.stringify(ast)
       output = Useless(html, css)
       assert.strictEqual('', output)
+    })
+  })
+  describe('Unsupported pseudo-clases', () => {
+    /* TODO: Revisit when I implement some of these */
+    it('E:target positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><a href="#more">Click to see more</a><p id="more">Here is more</p></div>')
+      let ast = cssLib.parse('p:target {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      console.error('CSS', css)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E:lang(en) positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><p lang="en_us">Hello, world!</p></div>')
+      let ast = cssLib.parse('p:lang(en) {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E:enabled positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><p lang="en_us">Hello, world!</p></div>')
+      let ast = cssLib.parse('p:enabled {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E:disabled positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><p lang="en_us">Hello, world!</p></div>')
+      let ast = cssLib.parse('p:disabled {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E:checked positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><p lang="en_us">Hello, world!</p></div>')
+      let ast = cssLib.parse('p:checked {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+  })
+  describe('Unsupported pseudo-elements', () => {
+    /* TODO: Revisit when I implement some of these */
+    it('E::first-line positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><a href="#more">Click to see more</a><p id="more">Here is more</p></div>')
+      let ast = cssLib.parse('p::first-line {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      console.error('CSS', css)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E::first-letter positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><a href="#more">Click to see more</a><p id="more">Here is more</p></div>')
+      let ast = cssLib.parse('p::first-letter {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      console.error('CSS', css)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E::before positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><a href="#more">Click to see more</a><p id="more">Here is more</p></div>')
+      let ast = cssLib.parse('p::before {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      console.error('CSS', css)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
+    })
+    it('E::after positive case should still be included if the rest of the selector would be active', () => {
+      let $ = cheerio.load(blankHtmlTemplate)
+      $('body').append('<div><a href="#more">Click to see more</a><p id="more">Here is more</p></div>')
+      let ast = cssLib.parse('p::after {color: "red";}')
+      let html = $.root().html()
+      let css = cssLib.stringify(ast)
+      console.error('CSS', css)
+      let output = Useless(html, css)
+      assert.strictEqual(css, output)
     })
   })
   describe('Class selectors', () => {

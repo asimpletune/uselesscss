@@ -52,6 +52,7 @@ Where `html` and `css` are strings.
 
 ## TODO
 
+* Add support for :target, :lang
 * MORE test cases
 * Write short comparison between this and similar tools, like uncss
 * Show some real data on the amount of network bandwidth saved and improved load times
