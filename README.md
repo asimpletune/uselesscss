@@ -50,6 +50,24 @@ var reducedCss = Useless(html, css)
 
 Where `html` and `css` are strings.
 
+## Example results
+
+The following examples can be found in the [example](/example) section of this project. They can be generated easily by running
+
+```bash
+./bin/uselesscss example/foundation/kitchen_sink.html example/foundation/css/docs.css > example/foundation/css/docs.useless.css
+./bin/uselesscss example/bootstrap/bootswatch.html example/bootstrap/css/bootstrap.css > example/bootstrap/css/bootstrap.useless.css
+```
+
+The resulting output is as follows:
+
+| Framework  | HTML                                                       | Original CSS                                          | New CSS                                                               | Original size | New size | % reduction |
+|------------|------------------------------------------------------------|-------------------------------------------------------|-----------------------------------------------------------------------|---------------|----------|-------------|
+| Foundation | [kitchen_sink.html](/example/foundation/kitchen_sink.html) | [docs.css](/example/foundation/css/docs.css)          | [docs.useless.css](/example/foundation/css/docs.useless.css)          | 288KB         | 84KB     | 70%         |
+| Bootstrap  | [bootswatch.html](/example/bootstrap/bootswatch.html)      | [bootstrap.css](/example/bootstrap/css/bootstrap.css) | [bootstrap.useless.css](/example/bootstrap/css/bootstrap.useless.css) | 146KB         | 48KB     | 67%         |
+
+The above examples were chosen because their original intent is to demonstrate the full capabilities of their respective frameworks. Still, we see pretty good file size reductions. For more realistic projects, such as my [personal site](https://asimpletune.github.io), which make much more sparse use of such frameworks, the reduction is closer to 97%!
+
 ## TODO
 
 * General  
@@ -78,3 +96,4 @@ Where `html` and `css` are strings.
   * A few "real world tests", i.e. bootswatch + bootstrap compared to bootswatch + bootstrap + uselesscss
   * Compare output to similar tools
   * Add benchmarking
+  * Visual diffing

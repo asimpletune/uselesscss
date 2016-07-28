@@ -17,7 +17,8 @@
     "lib": "lib",
     "bin": "bin",
     "src": "src",
-    "test": "test"
+    "test": "test",
+    "example": "example"
   },
   "repository": {
     "type": "git",
