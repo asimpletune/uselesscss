@@ -30,10 +30,11 @@
   },
   "homepage": "https://github.com/asimpletune/uselesscss#readme",
   "dependencies": {
-    "cheerio": "^0.20.0",
     "css": "^2.2.1",
+    "css-select": "^1.2.0",
     "cssesc": "^0.1.0",
-    "docopt": "^0.6.2"
+    "docopt": "^0.6.2",
+    "htmlparser2": "^3.9.1"
   },
   "standard": {
     "globals": [
@@ -49,6 +50,7 @@
     "babel-preset-es2015": "^6.1.18",
     "babel-register": "^6.9.0",
     "chai": "^3.5.0",
+    "cheerio": "^0.20.0",
     "console.table": "^0.7.0",
     "eslint": "^3.1.1",
     "eslint-config-standard": "^5.3.5",

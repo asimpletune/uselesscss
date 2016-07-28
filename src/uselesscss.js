@@ -1,12 +1,13 @@
 import cssLib from 'css'
-import cheerio from 'cheerio'
+import {parseDOM} from 'htmlparser2'
+import select from 'css-select'
 import cssesc from 'cssesc'
 
 /**
  * Useless(html, css) -> css
  */
 export default function Useless (html, css) {
-  var $ = cheerio.load(html)
+  var dom = parseDOM(html)
   return reduceCss(css)
 
   function reduceCss (css) {
@@ -58,9 +59,9 @@ export default function Useless (html, css) {
     }
     let selection
     try {
-      selection = $(selector)
+      selection = select(selector, dom)
     } catch (e) {
-      selection = $(cssesc(selector, {isIdentifier: true}))
+      selection = select(cssesc(selector, {isIdentifier: true}), dom)
     }
     result = selection.length > 0
     return result
