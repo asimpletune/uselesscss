@@ -6,17 +6,14 @@ The goal behind this project is to speed up websites and make for cleaner result
 ## Install/Run
 
 ```bash
-# clone repo and cd into project
-npm install   # install dependencies
-npm run build # build from source
-./bin/uselesscss --help
+npm install uselesscss # you can add -g for a global install, available from the command line
 ```
 
 ## Usage
 
-You can use uselesscss through the CLI or as a library
+You can use uselesscss through the command line interface or as a library
 
-### CLI
+### Command line interface
 
 ```bash
 usage:
@@ -72,7 +69,6 @@ The above examples were chosen because their original intent is to demonstrate t
 
 * General  
   * Preserve input formatting in output
-  * Publish to npm registry
   * Better selector parsing/engine (entirely new project)
   * Better selection algorithm (i.e. sort of memoize previous attempts to reduce always going to the selector engine)
   * Windows support

@@ -7,7 +7,7 @@ import { execSync } from 'child_process'
 import temp from 'temporary'
 import util from 'util'
 
-describe('Comparison of uselesscss to similar tools', function () {
+  describe('Comparison of uselesscss to similar tools', function () {
   let bootswatchPath
   let bootstrapPath
   before(function () {
@@ -15,14 +15,13 @@ describe('Comparison of uselesscss to similar tools', function () {
     bootstrapPath = './test/css/bootstrap.css'
   })
   describe('Uselesscss vs Uncss', function () {
+    this.timeout(20000)
     let tempUselessCss
     let tempUnCss
-    beforeEach(function () {
+    let results
+    before(function () {
       tempUselessCss = new temp.File()
       tempUnCss = new temp.File()
-    })
-    it('CLI should produce equivalent output to uncss', function () {
-      this.timeout(20000)
       let uselessStart = process.hrtime()
       let uselessBootstrap = String(execSync(`./bin/uselesscss ${bootswatchPath} ${bootstrapPath}`))
       let uselessElapsed = process.hrtime(uselessStart)
@@ -31,7 +30,7 @@ describe('Comparison of uselesscss to similar tools', function () {
       let uncssElapsed = process.hrtime(uncssStart)
       tempUselessCss.writeFileSync(uselessBootstrap)
       tempUnCss.writeFileSync(uncssBootstrap)
-      let result = compare({
+      results = compare({
         'path': tempUselessCss.path,
         'name': 'useless',
         'elapsed': util.format('%ds %dms', uselessElapsed[0], uselessElapsed[1] / 1000000)
@@ -40,13 +39,15 @@ describe('Comparison of uselesscss to similar tools', function () {
         'name': 'uncss',
         'elapsed': util.format('%ds %dms', uncssElapsed[0], uncssElapsed[1] / 1000000)
       })
-      assert.strictEqual(result.other['rules'], result.uselesscss['rules'])
-      assert.isAtLeast(result.other['comments'], result.uselesscss['comments'])
-      assert.strictEqual(result.other['media rules'], result.uselesscss['media rules'])
-      assert.strictEqual(result.other['keyframes'], result.uselesscss['keyframes'])
-      assert.strictEqual(result.other['font-face rules'], result.uselesscss['font-face rules'])
     })
-    afterEach(function () {
+    it('CLI should produce equivalent output to uncss (less comments, for now)', function () {
+      assert.strictEqual(results.other['rules'], results.uselesscss['rules'])
+      assert.isAtLeast(results.other['comments'], results.uselesscss['comments'])
+      assert.strictEqual(results.other['media rules'], results.uselesscss['media rules'])
+      assert.strictEqual(results.other['keyframes'], results.uselesscss['keyframes'])
+      assert.strictEqual(results.other['font-face rules'], results.uselesscss['font-face rules'])
+    })
+    after(function () {
       tempUselessCss.unlink()
       tempUnCss.unlink()
     })

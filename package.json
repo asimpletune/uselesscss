@@ -1,6 +1,6 @@
 {
   "name": "uselesscss",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Trim bloat from your CSS by only including rules that will actually be active.",
   "main": "lib/uselesscss.js",
   "scripts": {
@@ -14,11 +14,7 @@
     "uselesscss": "bin/uselesscss"
   },
   "directories": {
-    "lib": "lib",
-    "bin": "bin",
-    "src": "src",
-    "test": "test",
-    "example": "example"
+    "test": "test"
   },
   "repository": {
     "type": "git",
@@ -62,5 +58,25 @@
     "temporary": "0.0.8",
     "uncss": "^0.14.1"
   },
-  "preferGlobal": true
+  "preferGlobal": true,
+  "keywords": [
+    "css",
+    "useless",
+    "uselesscss",
+    "uncss",
+    "optimize",
+    "front-end",
+    "front",
+    "end",
+    "include",
+    "CSS",
+    "USELESS",
+    "USELESSCSS",
+    "UNCSS",
+    "OPTIMIZE",
+    "FRONT-END",
+    "FRONT",
+    "END",
+    "INCLUDE"
+  ]
 }

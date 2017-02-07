@@ -1,5 +1,5 @@
 import cssLib from 'css'
-import {parseDOM} from 'htmlparser2'
+import { parseDOM } from 'htmlparser2'
 import select from 'css-select'
 import cssesc from 'cssesc'
 
@@ -61,7 +61,7 @@ export default function Useless (html, css) {
     try {
       selection = select(selector, dom)
     } catch (e) {
-      selection = select(cssesc(selector, {isIdentifier: true}), dom)
+      selection = select(cssesc(selector, { isIdentifier: true }), dom)
     }
     result = selection.length > 0
     return result
