@@ -1,6 +1,6 @@
 {
   "name": "uselesscss",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "description": "Trim bloat from your CSS by only including rules that will actually be active.",
   "main": "lib/uselesscss.js",
   "scripts": {
