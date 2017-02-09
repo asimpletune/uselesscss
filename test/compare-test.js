@@ -7,7 +7,7 @@ import { execSync } from 'child_process'
 import temp from 'temporary'
 import util from 'util'
 
-  describe('Comparison of uselesscss to similar tools', function () {
+describe('Comparison of uselesscss to similar tools', function () {
   let bootswatchPath
   let bootstrapPath
   before(function () {

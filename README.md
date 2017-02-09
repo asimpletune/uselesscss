@@ -64,32 +64,3 @@ The resulting output is as follows:
 | Bootstrap  | [bootswatch.html](/example/bootstrap/bootswatch.html)      | [bootstrap.css](/example/bootstrap/css/bootstrap.css) | [bootstrap.useless.css](/example/bootstrap/css/bootstrap.useless.css) | 146KB         | 48KB     | 67%         |
 
 The above examples were chosen because their original intent is to demonstrate the full capabilities of their respective frameworks. Still, we see pretty good file size reductions. For more realistic projects, such as my [personal site](https://asimpletune.github.io), which make much more sparse use of such frameworks, the reduction is closer to 97%!
-
-## TODO
-
-* General  
-  * Preserve input formatting in output
-  * Better selector parsing/engine (entirely new project)
-  * Better selection algorithm (i.e. sort of memoize previous attempts to reduce always going to the selector engine)
-  * Windows support
-* Documentation
-  * Write short comparison between this and similar tools, like uncss
-  * Show some real data on the amount of network bandwidth saved and improved load times
-  * Common how to:
-    * Write section on how to incorporate uselesscss with dynamic selection of CSS
-    * Supply multiple files as args either through CLI or concatenating before hand
-    * Sample pipeline from beginning to end
-    * Suggestions on how to use on sites with many pages
-* Lib
-  * Add support for :target, :lang
-* CLI  
-  * Allow url as an arg (e.g. html that's generated at runtime would be hard to make use of this)
-  * -o | --output
-  * Include a flag to output what was excluded or save that output file
-  * Ignore flag that maybe takes a regex
-* Testing
-  * Finish CLI tests
-  * A few "real world tests", i.e. bootswatch + bootstrap compared to bootswatch + bootstrap + uselesscss
-  * Compare output to similar tools
-  * Add benchmarking
-  * Visual diffing

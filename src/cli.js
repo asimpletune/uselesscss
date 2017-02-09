@@ -11,7 +11,7 @@ options:
   -h --help  Show this message
   --version  Print version`
 
-let args = docopt(usage, { version: '0.0.12' })
+let args = docopt(usage, { version: '0.0.13' })
 
 let html = fs.readFileSync(args['<html>'], 'utf8')
 let css = ''
