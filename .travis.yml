@@ -1,5 +1,10 @@
 language: node_js
 node_js:
   - "6"
+before_install:
+  - gem update --system
+  - gem --version
+install:
+  - gem install percy-client
 sudo: false
 script: "npm run-script test-ci"
