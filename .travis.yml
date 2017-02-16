@@ -2,9 +2,10 @@ language: node_js
 node_js:
   - "6"
 before_install:
-  - gem update --system
-  - gem --version
-install:
-  - gem install percy-client
+  - "rvm use 2.2 --install --default"
+  - "gem install percy-cli"
 sudo: false
-script: "npm run-script test-ci"
+script:
+  - "npm run-script test-ci"
+  - "./bin/uselesscss test/_site/bootswatch.useless.html test/css/bootstrap.css > test/_site/bootstrap.useless.css"
+  - "percy snapshot test/_site/"
